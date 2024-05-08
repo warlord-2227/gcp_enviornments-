@@ -1,8 +1,3 @@
-provider "google" {
-  project = var.project_id
-  region  = var.region
-}
-
 resource "google_storage_bucket" "function_bucket" {
   name     = "${var.function_name}-bucket"
   location = var.region

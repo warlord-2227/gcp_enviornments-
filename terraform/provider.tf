@@ -1,20 +1,30 @@
 terraform {
-  required_version = ">= 0.13"
-
   required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.0.2"
+    }
     google = {
       source  = "hashicorp/google"
-      version = ">= 4.51.0"
+      version = "4.51.0"
     }
   }
 
-  backend "remote" {
-    hostname     = "app.terraform.io"
+  cloud {
     organization = "IWABC"
-
     workspaces {
       project = "merlin"
       name    = "gcp_enviornments-prod"
     }
   }
+}
+
+provider "azurerm" {
+  features {}
+}
+
+provider "google" {
+  project     = "my-project-6242-308916"
+  region      = "us-central1"
+  scopes      = ["https://www.googleapis.com/auth/compute", "https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudfunctions"]
 }
