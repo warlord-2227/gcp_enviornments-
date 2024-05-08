@@ -27,9 +27,9 @@ jobs:
 
     - name: Package the Cloud Function
       run: |
-        cd src
+        cd ./src/functions
         zip -r function.zip .
-        mv function.zip terraform/
+        mv function.zip ../terraform/
       
   
     - name: Check current directory and list files
