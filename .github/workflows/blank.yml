@@ -79,7 +79,7 @@ jobs:
     - name: Terraform Plan
       run: |
           gcp_credentials=$(cat ${{ github.workspace }}/gcp_key.json)
-          terraform plan -var="google_credentials=${gcp_credentials}" -var="bucket_name=${{ secrets.GCS_BUCKET_NAME }}"
+          terraform plan -var="google_credentials=${gcp_credentials}" 
       working-directory: terraform
       env:
           TF_CLI_CONFIG_FILE: ${{ github.workspace }}/terraform.rc
