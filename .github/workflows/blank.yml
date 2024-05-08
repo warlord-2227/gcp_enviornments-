@@ -21,15 +21,11 @@ jobs:
       with:
         python-version: '3.9'
 
-    - name: Install Python Dependencies
-      run: pip install -r src/requirements.txt
-      working-directory: ${{ github.workspace }}
-
     - name: Package the Cloud Function
       run: |
         cd ./src/functions
         zip -r function.zip .
-        mv function.zip ../terraform/
+        mv function.zip ../../terraform/
       
   
     - name: Check current directory and list files
