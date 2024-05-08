@@ -1,0 +1,24 @@
+terraform {
+  required_version = ">= 0.13"
+
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = ">= 4.51.0"
+    }
+  }
+
+  backend "remote" {
+    hostname     = "app.terraform.io"
+    organization = "IWABC"
+
+    workspaces {
+      prefix = "gcp_enviornments-"
+    }
+  }
+}
+
+provider "google" {
+  project = "my-project-6242" 
+  region  = "us-central1"
+}
