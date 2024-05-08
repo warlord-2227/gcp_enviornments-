@@ -6,7 +6,7 @@ data "local_file" "function_hash" {
 variable "bucket_name" {
   description = "The name of the Google Cloud Storage bucket, assumed to be already created"
   type        = string
-  default =  hello-pubsub-function-bucket
+  default =  "hello-pubsub-function-bucket"
 }
 
 variable "bucket_location" {
