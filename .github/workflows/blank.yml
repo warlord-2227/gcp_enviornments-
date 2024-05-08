@@ -46,8 +46,8 @@ jobs:
       env:
         GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}   
         
-      - name: Verify GCloud Auth
-        run: gcloud auth list   
+    - name: Verify GCloud Auth
+      run: gcloud auth list   
 
     - name: Debug Workspace Name
       run: |
