@@ -1,13 +1,31 @@
-resource "google_storage_bucket" "function_bucket" {
-  name     = "${var.function_name}-bucket"
-  location = var.region
+data "local_file" "function_hash" {
+  filename = "function.zip.md5"
 }
 
-resource "google_storage_bucket_object" "function_code" {
-  name   = var.source_archive_filename
-  bucket = google_storage_bucket.function_bucket.name
-  source = "path/to/${var.source_archive_filename}"
+
+variable "bucket_name" {
+  description = "The name of the Google Cloud Storage bucket, assumed to be already created"
+  type        = string
+  default =  hello-pubsub-function-bucket
 }
+
+variable "bucket_location" {
+  description = "The location for the Google Cloud Storage bucket"
+  default     = "us-central1"
+}
+
+resource "google_storage_bucket" "bucket" {
+  name   = var.bucket_name
+}
+
+
+resource "google_storage_bucket_object" "function_code" {
+  name   = "${var.function_name}-function-${trimspace(data.local_file.function_hash.content)}.zip"
+  bucket = data.google_storage_bucket.bucket.name
+  source = "function.zip"  # Ensure this file is generated in prior steps in your CI/CD pipeline
+}
+
+
 
 resource "google_pubsub_topic" "function_trigger_topic" {
   name = var.pubsub_topic
@@ -18,22 +36,28 @@ resource "google_cloudfunctions_function" "default" {
   description           = "A Cloud Function triggered by Pub/Sub"
   runtime               = var.runtime
   available_memory_mb   = 256
-  source_archive_bucket = google_storage_bucket.function_bucket.name
+  source_archive_bucket = data.google_storage_bucket.bucket.name
   source_archive_object = google_storage_bucket_object.function_code.name
   entry_point           = var.entry_point
 
   event_trigger {
-    event_type = "google.pubsub.topic.publish"
+    event_type = "providers/cloud.pubsub/eventTypes/topic.publish"
     resource   = google_pubsub_topic.function_trigger_topic.id
   }
 
   environment_variables = {
-    EXAMPLE_VAR = "example_value"
+    LAST_UPDATE_TIME = timestamp()
   }
-}
+  project = var.project_id
+  region  = var.bucket_location
+  
+  labels = {
+    "content-hash" = trimspace(data.local_file.function_hash.content)
+  }
 
-output "function_url" {
-  value = google_cloudfunctions_function.default.https_trigger_url
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 output "pubsub_topic" {

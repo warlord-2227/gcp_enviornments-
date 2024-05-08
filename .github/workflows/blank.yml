@@ -27,11 +27,23 @@ jobs:
 
     - name: Package the Cloud Function
       run: |
-        zip -r hello-pubsub.zip functions/ main.py
-      working-directory: src
+        cd src
+        zip -r function.zip .
+        mv functions.zip terraform/
+      
+  
+    - name: Check current directory and list files
+      run: |
+        pwd
+        ls -la
 
-    - name: Move Zip to Terraform Directory
-      run: mv src/hello-pubsub.zip terraform/hello-pubsub.zip
+    - name: Generate MD5 hash of the function code
+      run: md5sum function.zip | awk '{print $1}' > function.zip.md5
+      working-directory: terraform
+    
+    - name: Print MD5 hash
+      run: cat function.zip.md5
+      working-directory: terraform
 
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1

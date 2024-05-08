@@ -20,7 +20,7 @@ variable "region" {
 variable "function_name" {
   description = "Name of the Cloud Function"
   type        = string
-  default     = "hello-pubsub-function"
+  default     = "hello-pubsub-function-prod"
 }
 
 variable "source_archive_filename" {
