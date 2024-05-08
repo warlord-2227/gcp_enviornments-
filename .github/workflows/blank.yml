@@ -55,7 +55,7 @@ jobs:
     - name: Create terraform.rc file for Terraform Cloud Credentials
       run: |
         echo "credentials \"app.terraform.io\" {" > ${{ github.workspace }}/terraform.rc
-        echo "  token = \"${{ secrets.TF_CLOUD_TOKEN }}\"" >> ${{ github.workspace }}/terraform.rc
+        echo "  token = \"${{ secrets.TF_API_TOKEN }}\"" >> ${{ github.workspace }}/terraform.rc
         echo "}" >> ${{ github.workspace }}/terraform.rc
       
     - name: Authenticate with Google Cloud
@@ -79,7 +79,7 @@ jobs:
     - name: Terraform Plan
       run: |
           gcp_credentials=$(cat ${{ github.workspace }}/gcp_key.json)
-          terraform plan -var="google_credentials=${gcp_credentials}" -var="bucket_name=${{ secrets.GCS_BUCKET_NAME }}" -var="environment=${{ env.ENVIRONMENT }}"
+          terraform plan -var="google_credentials=${gcp_credentials}" -var="bucket_name=${{ secrets.GCS_BUCKET_NAME }}"
       working-directory: terraform
       env:
           TF_CLI_CONFIG_FILE: ${{ github.workspace }}/terraform.rc
