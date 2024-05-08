@@ -1,11 +1,13 @@
 variable "project_id" {
   description = "The Google Cloud project ID"
   type        = string
+  default     = "my-project-6242-308916"
 }
 
 variable "region" {
   description = "The region where the function and resources will be deployed"
   type        = string
+  default     = "us-central1"
 }
 
 variable "function_name" {
