@@ -14,7 +14,7 @@ terraform {
     organization = "IWABC"
     workspaces {
       project = "merlin"
-      name    = "gcp_enviornments-production"
+      name    = "gcp_enviornments-testing"
     }
   }
 }
