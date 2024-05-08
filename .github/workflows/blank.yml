@@ -29,7 +29,7 @@ jobs:
       run: |
         cd src
         zip -r function.zip .
-        mv functions.zip terraform/
+        mv function.zip terraform/
       
   
     - name: Check current directory and list files
