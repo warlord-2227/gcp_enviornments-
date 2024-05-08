@@ -17,8 +17,3 @@ terraform {
     }
   }
 }
-
-provider "google" {
-  project = "my-project-6242" 
-  region  = "us-central1"
-}
