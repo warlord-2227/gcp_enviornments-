@@ -4,6 +4,13 @@ variable "project_id" {
   default     = "my-project-6242-308916"
 }
 
+variable "google_credentials" {
+  type        = string
+  sensitive   = true
+  default     = ""
+  description = "Google Cloud service account credentials"
+}
+
 variable "region" {
   description = "The region where the function and resources will be deployed"
   type        = string

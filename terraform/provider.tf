@@ -25,6 +25,7 @@ provider "azurerm" {
 
 provider "google" {
   project     = "my-project-6242-308916"
+  credentials = var.google_credentials
   region      = "us-central1"
   scopes      = ["https://www.googleapis.com/auth/compute", "https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudfunctions"]
 }
