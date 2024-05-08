@@ -14,9 +14,8 @@ variable "bucket_location" {
   default     = "us-central1"
 }
 
-resource "google_storage_bucket" "bucket" {
-  name   = var.bucket_name
-  location = var.bucket_location
+data "google_storage_bucket" "bucket" {
+  name = var.bucket_name
 }
 
 
