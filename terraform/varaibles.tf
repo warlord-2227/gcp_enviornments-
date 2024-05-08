@@ -32,7 +32,7 @@ variable "source_archive_filename" {
 variable "pubsub_topic" {
   description = "Name of the Pub/Sub topic to be created and used as a trigger"
   type        = string
-  default     = "hello-pubsub-topic"
+  default     = "hello-pubsub-topic-test"
 }
 
 variable "runtime" {
