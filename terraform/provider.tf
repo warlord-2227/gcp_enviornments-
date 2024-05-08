@@ -13,7 +13,8 @@ terraform {
     organization = "IWABC"
 
     workspaces {
-      prefix = "gcp_enviornments-"
+      project = "merlin"
+      name    = "gcp_enviornments-prod"
     }
   }
 }

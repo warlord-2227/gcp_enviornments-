@@ -41,7 +41,7 @@ jobs:
 
     - name: Debug Workspace Name
       run: |
-        echo "Workspace name to be used: gcp_enviornments-${{ github.ref_name }}"
+        echo "Workspace name to be used: ${{ github.ref_name }}"
       working-directory: terraform
 
     
@@ -50,9 +50,7 @@ jobs:
         echo "Initializing Terraform..."
         terraform init
         echo "Initialization complete."
-        workspace_name="${{ github.ref_name }}"
-        echo "Selecting or creating workspace named $workspace_name"
-        terraform workspace select "$workspace_name" || echo "Workspace $workspace_name does not exist, creating it..." && terraform workspace new "$workspace_name"
+        
       working-directory: terraform
       env:
         TF_INPUT: false
