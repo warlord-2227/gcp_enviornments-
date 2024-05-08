@@ -48,6 +48,20 @@ jobs:
         
     - name: Verify GCloud Auth
       run: gcloud auth list   
+    
+    - name: Write GCP Key to File
+      run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > ${{ github.workspace }}/gcp_key.json
+    
+    - name: Create terraform.rc file for Terraform Cloud Credentials
+      run: |
+        echo "credentials \"app.terraform.io\" {" > ${{ github.workspace }}/terraform.rc
+        echo "  token = \"${{ secrets.TF_CLOUD_TOKEN }}\"" >> ${{ github.workspace }}/terraform.rc
+        echo "}" >> ${{ github.workspace }}/terraform.rc
+      
+    - name: Authenticate with Google Cloud
+      env:
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      run: gcloud auth activate-service-account --key-file="${{ github.workspace }}/gcp_key.json"
 
     - name: Debug Workspace Name
       run: |
@@ -63,12 +77,18 @@ jobs:
         TF_INPUT: false
 
     - name: Terraform Plan
-      run: terraform plan
+      run: |
+          gcp_credentials=$(cat ${{ github.workspace }}/gcp_key.json)
+          terraform plan -var="google_credentials=${gcp_credentials}" -var="bucket_name=${{ secrets.GCS_BUCKET_NAME }}" -var="environment=${{ env.ENVIRONMENT }}"
       working-directory: terraform
+      env:
+          TF_CLI_CONFIG_FILE: ${{ github.workspace }}/terraform.rc
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/prod' || github.ref == 'refs/heads/test'
-      run: terraform apply -auto-approve
+      run: |
+          gcp_credentials=$(cat ${{ github.workspace }}/gcp_key.json)
+          terraform apply -auto-approve -var="google_credentials=${gcp_credentials}" 
       working-directory: terraform
 
     - name: List Terraform State
