@@ -50,10 +50,12 @@ jobs:
         echo "Initializing Terraform..."
         terraform init
         echo "Initialization complete."
-        workspace_name="gcp_enviornments-${{ github.ref_name }}"
+        workspace_name="${{ github.ref_name }}"
         echo "Selecting or creating workspace named $workspace_name"
         terraform workspace select "$workspace_name" || echo "Workspace $workspace_name does not exist, creating it..." && terraform workspace new "$workspace_name"
       working-directory: terraform
+      env:
+        TF_INPUT: false
 
     - name: Terraform Plan
       run: terraform plan
