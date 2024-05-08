@@ -90,6 +90,9 @@ jobs:
           gcp_credentials=$(cat ${{ github.workspace }}/gcp_key.json)
           terraform apply -auto-approve -var="google_credentials=${gcp_credentials}" 
       working-directory: terraform
+      env:
+        TF_CLI_CONFIG_FILE: ${{ github.workspace }}/terraform.rc
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/gcp_key.json
 
     - name: List Terraform State
       run: terraform state list
