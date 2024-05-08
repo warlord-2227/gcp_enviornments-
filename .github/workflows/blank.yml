@@ -38,21 +38,21 @@ jobs:
       with:
         terraform_version: "1.0.x"
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-        
+
     - name: Debug Workspace Name
       run: |
         echo "Workspace name to be used: gcp_enviornments-${{ github.ref_name }}"
       working-directory: terraform
 
     
-    - name: Initialize Terraform
-      run: terraform init
-      working-directory: terraform
-
-    - name: Select Workspace
+    - name: Debug Initialization and Workspace Selection
       run: |
+        echo "Initializing Terraform..."
+        terraform init
+        echo "Initialization complete."
         workspace_name="gcp_enviornments-${{ github.ref_name }}"
-        terraform workspace select "$workspace_name" || terraform workspace new "$workspace_name"
+        echo "Selecting or creating workspace named $workspace_name"
+        terraform workspace select "$workspace_name" || echo "Workspace $workspace_name does not exist, creating it..." && terraform workspace new "$workspace_name"
       working-directory: terraform
 
     - name: Terraform Plan
