@@ -46,7 +46,7 @@ resource "google_cloudfunctions_function" "default" {
 
   event_trigger {
     event_type = "providers/cloud.pubsub/eventTypes/topic.publish"
-    resource   = google_pubsub_topic.function_trigger_topic.id
+    resource   = google_pubsub_topic.function_trigger_topic[0].id
   }
 
   environment_variables = {
@@ -65,5 +65,5 @@ resource "google_cloudfunctions_function" "default" {
 }
 
 output "pubsub_topic" {
-  value = google_pubsub_topic.function_trigger_topic.name
+  value = google_pubsub_topic.function_trigger_topic[0].name
 }
