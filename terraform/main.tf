@@ -25,9 +25,13 @@ resource "google_storage_bucket_object" "function_code" {
   source = "function.zip"  # Ensure this file is generated in prior steps in your CI/CD pipeline
 }
 
-
+variable "manage_pubsub_topic" {
+  type    = bool
+  default = true
+}
 
 resource "google_pubsub_topic" "function_trigger_topic" {
+  count = var.manage_pubsub_topic ? 1 : 0
   name = var.pubsub_topic
 }
 
