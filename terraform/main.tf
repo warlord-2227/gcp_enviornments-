@@ -24,11 +24,6 @@ variable "manage_pubsub_topic" {
   default     = true
 }
 
-variable "project_id" {
-  description = "The Google Cloud project ID"
-  type        = string
-  default     = "my-project-6242-308916"
-}
 
 # Using a condition to create or not create the Pub/Sub topic
 resource "google_pubsub_topic" "function_trigger_topic" {
