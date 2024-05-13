@@ -94,7 +94,7 @@ jobs:
     
     - name: Remove All State Entries
       run: |
-        for resource in $(terraform state list); do
+        terraform state list | while read -r resource; do
           terraform state rm "$resource"
         done
       working-directory: terraform
