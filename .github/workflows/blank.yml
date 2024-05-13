@@ -85,7 +85,7 @@ jobs:
     
     - name: Terraform Init
       run: | 
-            terraform init
+            terraform init -ignore-remote-version
             terraform state list
 
       working-directory: terraform
