@@ -94,10 +94,12 @@ jobs:
     
     - name: Remove All State Entries
       run: |
-        for resource in $(terraform state list); do
+         terraform state list | while read -r resource; do
+          echo "Removing $resource from state"
           terraform state rm "$resource"
-        done
+          done
       working-directory: terraform
+      shell: bash
 
     - name: Terraform Plan
       run: |
