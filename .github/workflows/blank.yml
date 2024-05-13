@@ -84,8 +84,10 @@ jobs:
 
     
     - name: Terraform Init
-      run: terraform init
-        
+      run: | 
+            terraform init
+            terraform state list
+            
       working-directory: terraform
       env:
         TF_INPUT: false
