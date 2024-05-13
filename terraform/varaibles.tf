@@ -39,3 +39,10 @@ variable "entry_point" {
   type        = string
   default     = "hello_pubsub"
 }
+
+variable "google_credentials" {
+  description = "Google Cloud service account credentials JSON"
+  type        = string
+  default     = ""  // You can keep this empty if you're passing the value via command line or environment variable
+  sensitive   = true  // This marks the variable as sensitive, which prevents Terraform from showing its value in logs
+}
