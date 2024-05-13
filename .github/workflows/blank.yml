@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - dev
-      - test
+      - new_test
       - prod
   workflow_dispatch:
 
@@ -101,7 +101,7 @@ jobs:
           TF_CLI_CONFIG_FILE: ${{ github.workspace }}/terraform.rc
 
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/prod' || github.ref == 'refs/heads/test'
+      if: github.ref == 'refs/heads/prod' || github.ref == 'refs/heads/new_test'
       run: |
           gcp_credentials=$(cat ${{ github.workspace }}/gcp_key.json)
           terraform apply -auto-approve -var="google_credentials=${gcp_credentials}" 
