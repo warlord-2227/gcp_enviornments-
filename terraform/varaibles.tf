@@ -13,7 +13,7 @@ variable "region" {
 variable "function_name" {
   description = "Name of the Cloud Function"
   type        = string
-  default     = "hello-pubsub-function-production"
+  default     = "hello-pubsub-function-test"
 }
 
 variable "bucket_name" {
