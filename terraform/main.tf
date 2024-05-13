@@ -10,6 +10,19 @@ data "google_pubsub_topic" "topic" {
   name = var.pubsub_topic
 }
 
+resource "google_storage_bucket" "bucket" {
+  name          = var.bucket_name
+  location      = var.bucket_location
+  force_destroy = true  // Be very cautious with this setting
+}
+
+resource "google_storage_bucket_object" "function_code" {
+  name   = "${var.function_name}-function-${trimspace(data.local_file.function_hash.content)}.zip"
+  bucket = data.google_storage_bucket.bucket.name
+  source = "function.zip"  // Ensure this path is correct
+}
+
+
 resource "google_pubsub_topic" "function_trigger_topic" {
   count = var.manage_pubsub_topic ? 1 : 0
   name  = var.pubsub_topic
