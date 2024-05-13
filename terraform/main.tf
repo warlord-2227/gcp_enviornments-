@@ -16,10 +16,9 @@ resource "google_storage_bucket" "bucket" {
   force_destroy = true  // Be very cautious with this setting
 }
 
-resource "google_storage_bucket_object" "function_code" {
-  name   = "${var.function_name}-function-${trimspace(data.local_file.function_hash.content)}.zip"
+data "google_storage_bucket_object" "function_code" {
+  name   = "prod/function.zip"
   bucket = data.google_storage_bucket.bucket.name
-  source = "function.zip"  // Ensure this path is correct
 }
 
 resource "google_cloudfunctions_function" "default" {

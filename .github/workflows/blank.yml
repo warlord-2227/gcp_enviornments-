@@ -76,6 +76,12 @@ jobs:
         echo "Workspace name to be used: ${{ github.ref_name }}"
       working-directory: terraform
 
+    - name: Upload Function Code to GCS
+      run: |
+        gsutil cp ./terraform/function.zip gs://mast_bucket_test/prod/
+      env:
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/gcp_key.json
+
     
     - name: Terraform Init
       run: terraform init
