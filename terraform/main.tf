@@ -18,7 +18,7 @@ resource "google_storage_bucket" "bucket" {
   name     = "hello-pubsub-function-bucket"
   location = var.region
   # Setting force_destroy to false to prevent accidental bucket deletion
-  force_destroy = false
+  force_destroy = true
 }
 
 resource "google_cloudfunctions_function" "default" {
