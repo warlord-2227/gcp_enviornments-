@@ -4,13 +4,6 @@ variable "project_id" {
   default     = "my-project-6242-308916"
 }
 
-variable "google_credentials" {
-  type        = string
-  sensitive   = true
-  default     = ""
-  description = "Google Cloud service account credentials"
-}
-
 variable "region" {
   description = "The region where the function and resources will be deployed"
   type        = string
@@ -23,16 +16,16 @@ variable "function_name" {
   default     = "hello-pubsub-function-prod"
 }
 
-variable "source_archive_filename" {
-  description = "Filename for the zipped source archive"
+variable "bucket_name" {
+  description = "The name of the Google Cloud Storage bucket, assumed to be already created"
   type        = string
-  default     = "hello-pubsub.zip"
+  default     = "hello-pubsub-function-bucket"
 }
 
 variable "pubsub_topic" {
-  description = "Name of the Pub/Sub topic to be created and used as a trigger"
+  description = "Name of the Pub/Sub topic, assumed to be already created"
   type        = string
-  default     = "hello-pubsub-topic-test"
+  default     = "hello-pubsub-topic-prod"
 }
 
 variable "runtime" {
