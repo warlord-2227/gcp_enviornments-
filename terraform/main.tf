@@ -12,7 +12,7 @@ data "google_pubsub_topic" "topic" {
 
 resource "google_storage_bucket" "bucket" {
   name          = var.bucket_name
-  location      = var.bucket_location
+  location      = var.region
   force_destroy = true  // Be very cautious with this setting
 }
 
