@@ -19,13 +19,13 @@ variable "function_name" {
 variable "bucket_name" {
   description = "The name of the Google Cloud Storage bucket, assumed to be already created"
   type        = string
-  default     = "hello-pubsub-function-bucket"
+  default     = "mast_bucket_test"
 }
 
 variable "pubsub_topic" {
   description = "Name of the Pub/Sub topic, assumed to be already created"
   type        = string
-  default     = "hello-pubsub-topic-prod"
+  default     = "mast_pubsub"
 }
 
 variable "runtime" {
