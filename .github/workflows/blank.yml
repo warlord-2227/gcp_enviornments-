@@ -94,7 +94,11 @@ jobs:
     
     - name: Remove All State Entries Using xargs
       run: |
-        terraform state list | xargs -I % sh -c 'echo "Removing %"; terraform state rm "%"'
+        resources=$(terraform state list)
+        for resource in $resources; do
+          echo "Removing $resource from state"
+          terraform state rm "$resource"
+        done
       working-directory: terraform
       shell: bash
 
