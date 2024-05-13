@@ -15,5 +15,5 @@ client.setup_logging()
 
 def hello_pubsub(cloud_event,context):
     # Print out the data from Pub/Sub, to prove that it worked
-    print("testing-started now")
+    print("testing-started now- check")
     logging.info(f"Successfully worked")
