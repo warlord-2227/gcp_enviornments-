@@ -46,3 +46,10 @@ variable "google_credentials" {
   default     = ""  // You can keep this empty if you're passing the value via command line or environment variable
   sensitive   = true  // This marks the variable as sensitive, which prevents Terraform from showing its value in logs
 }
+
+
+variable "manage_pubsub_topic" {
+  description = "Flag to manage the Pub/Sub topic with Terraform"
+  type        = bool
+  default     = true
+}
