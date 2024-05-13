@@ -22,12 +22,6 @@ resource "google_storage_bucket_object" "function_code" {
   source = "function.zip"  // Ensure this path is correct
 }
 
-
-resource "google_pubsub_topic" "function_trigger_topic" {
-  count = var.manage_pubsub_topic ? 1 : 0
-  name  = var.pubsub_topic
-}
-
 resource "google_cloudfunctions_function" "default" {
   name                  = var.function_name
   description           = "A Cloud Function triggered by Pub/Sub"
@@ -39,7 +33,7 @@ resource "google_cloudfunctions_function" "default" {
 
   event_trigger {
     event_type = "providers/cloud.pubsub/eventTypes/topic.publish"
-    resource   = var.manage_pubsub_topic ? google_pubsub_topic.function_trigger_topic[0].id : ""
+    resource   = data.google_pubsub_topic.topic.id
   }
 
   environment_variables = {
