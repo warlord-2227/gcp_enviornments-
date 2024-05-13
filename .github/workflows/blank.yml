@@ -92,12 +92,9 @@ jobs:
       env:
         TF_INPUT: false
     
-    - name: Remove All State Entries
+    - name: Remove All State Entries Using xargs
       run: |
-         terraform state list | while read -r resource; do
-          echo "Removing $resource from state"
-          terraform state rm "$resource"
-          done
+        terraform state list | xargs -I % sh -c 'echo "Removing %"; terraform state rm "%"'
       working-directory: terraform
       shell: bash
 
