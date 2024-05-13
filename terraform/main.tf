@@ -14,12 +14,6 @@ data "google_storage_bucket_object" "function_code" {
   name   = "prod/function.zip"
   bucket = data.google_storage_bucket.bucket.name
 }
-resource "google_storage_bucket" "bucket" {
-  name     = "hello-pubsub-function-bucket"
-  location = var.region
-  # Setting force_destroy to false to prevent accidental bucket deletion
-  force_destroy = true
-}
 
 resource "google_cloudfunctions_function" "default" {
   name                  = var.function_name
