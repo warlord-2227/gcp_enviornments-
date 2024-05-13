@@ -21,7 +21,7 @@ resource "google_cloudfunctions_function" "default" {
   runtime               = var.runtime
   available_memory_mb   = 256
   source_archive_bucket = data.google_storage_bucket.bucket.name
-  source_archive_object = "function.zip"  // Adjust as necessary
+  source_archive_object = data.google_storage_bucket_object.function_code.name
   entry_point           = var.entry_point
 
   event_trigger {
