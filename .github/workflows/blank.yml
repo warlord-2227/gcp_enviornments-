@@ -92,16 +92,6 @@ jobs:
       env:
         TF_INPUT: false
     
-    - name: Remove All State Entries Using xargs
-      run: |
-        resources=$(terraform state list)
-        for resource in $resources; do
-          echo "Removing $resource from state"
-          terraform state rm "$resource"
-        done
-      working-directory: terraform
-      shell: bash
-
     - name: Terraform Plan
       run: |
           gcp_credentials=$(cat ${{ github.workspace }}/gcp_key.json)
