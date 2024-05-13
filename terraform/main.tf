@@ -10,12 +10,6 @@ data "google_pubsub_topic" "topic" {
   name = var.pubsub_topic
 }
 
-resource "google_storage_bucket" "bucket" {
-  name          = var.bucket_name
-  location      = var.region
-  force_destroy = true  // Be very cautious with this setting
-}
-
 data "google_storage_bucket_object" "function_code" {
   name   = "prod/function.zip"
   bucket = data.google_storage_bucket.bucket.name
